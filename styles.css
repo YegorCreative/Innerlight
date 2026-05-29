@@ -27,8 +27,18 @@ body {
   overflow-x: hidden;
 }
 
+body.nav-open {
+  overflow: hidden;
+}
+
 img { display: block; max-width: 100%; }
 a { text-decoration: none; color: inherit; }
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 3px;
+}
 
 .container {
   max-width: 1200px;
@@ -341,6 +351,27 @@ a { text-decoration: none; color: inherit; }
 @keyframes scrollBounce {
   0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
   80% { transform: translateX(-50%) translateY(14px); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .hero-img {
+    animation: none;
+    transform: none;
+  }
+
+  .ribbon-inner {
+    animation: none;
+  }
 }
 
 /* ── RIBBON ── */
@@ -791,9 +822,14 @@ a { text-decoration: none; color: inherit; }
     justify-content: center;
     align-items: center;
     gap: 36px;
+    padding: 96px 24px 40px;
     z-index: 99;
   }
   .nav-links .nav-link { font-size: 1.2rem; }
+  .nav-links .btn-nav {
+    width: min(100%, 280px);
+    justify-content: center;
+  }
   .nav-links.open { display: flex; }
   .nav-hamburger { display: flex; z-index: 100; }
   .nav-hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
@@ -803,6 +839,8 @@ a { text-decoration: none; color: inherit; }
   /* ── Hero ── */
   .hero { min-height: 100svh; }
   .hero-content { padding: 0 20px; }
+  .hero-title br,
+  .section-title br { display: none; }
   .hero-subtitle { font-size: 0.95rem; }
   .hero-actions {
     flex-direction: column;
@@ -876,9 +914,21 @@ a { text-decoration: none; color: inherit; }
 /* Small phones */
 @media (max-width: 420px) {
   .container { padding: 0 16px; }
+  .nav-inner { padding: 0 16px; }
+  .hero-content { padding: 0 16px; }
   .contact-grid { grid-template-columns: 1fr; }
   .about-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .stat-num { font-size: 1.7rem; }
   .hero-title { font-size: 2.6rem; }
+  .hero-subtitle,
+  .about-text,
+  .section-sub,
+  .cta-sub,
+  .contact-value { font-size: 0.92rem; }
+  .service-body,
+  .contact-card { padding-left: 16px; padding-right: 16px; }
+  .btn,
+  .hero-actions .btn,
+  .cta-actions .btn { max-width: 100%; }
 }
 

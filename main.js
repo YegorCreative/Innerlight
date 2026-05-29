@@ -7,16 +7,35 @@ window.addEventListener('scroll', () => {
 // ── MOBILE HAMBURGER ──
 const hamburger = document.getElementById('nav-hamburger');
 const navLinks  = document.getElementById('nav-links');
+
+const setMobileMenuState = (isOpen) => {
+  hamburger.classList.toggle('active', isOpen);
+  hamburger.setAttribute('aria-expanded', String(isOpen));
+  navLinks.classList.toggle('open', isOpen);
+  document.body.classList.toggle('nav-open', isOpen);
+};
+
 hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('active');
-  navLinks.classList.toggle('open');
+  setMobileMenuState(!navLinks.classList.contains('open'));
 });
 // Close menu on link click
 navLinks.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    navLinks.classList.remove('open');
+    setMobileMenuState(false);
   });
+});
+
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && navLinks.classList.contains('open')) {
+    setMobileMenuState(false);
+    hamburger.focus();
+  }
+});
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 720 && navLinks.classList.contains('open')) {
+    setMobileMenuState(false);
+  }
 });
 
 // ── INTERSECTION OBSERVER – fade-in-up on scroll ──
